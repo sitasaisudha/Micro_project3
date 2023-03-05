@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+        <label for="hr">Hours </label>
+        <input type="number" name="" id="hr" min="0">
+        <br>
+        <label for="min">Minutes</label>
+        <input type="number" name="" id="min" min="0" max="60">
+        <br>
+        <label for="sec">seconds </label>
+        <input type="number" name="" id="sec" min="0" max="60">
+        <br>
+        <input type="button" value="start" onclick="start_timer()">
+        <input type="button" value="stop" onclick="stop_timer()">
+        
+        
+
+   
+    <h1 id="timer"></h1>
+
+
+
+
+    <script> 
+    
+    let timeinterval = null ;
+    function start_timer(){
+        console.log(document.getElementById('hr').value)
+        console.log(document.getElementById('min').value)
+        console.log(document.getElementById('sec').value)
+        // console.log(document.getElementById('hr').value + document.getElementById('sec').value )
+
+
+        const hour = parseInt( document.getElementById('hr').value)
+        const minutes = parseInt( document.getElementById('min').value)
+        const seconds = parseInt(document.getElementById('sec').value)
+        console.log(hour, minutes, seconds);
+        let total_seconds = hour*3600 + minutes * 60 + seconds;
+        console.log(total_seconds)
+        if(total_seconds <= 0){
+            alert('please enter valid time')
+            return;
+
+        }
+        timeinterval = setInterval(() => {
+            const hours_left = Math.floor( (total_seconds/3600))
+            const minutes_left = Math.floor(( (total_seconds % 3600) /60))
+            const seconds_left = (total_seconds % 60)
+            console.log(hours_left)
+            console.log(minutes_left)
+            console.log(seconds_left)
+            document.getElementById('timer').textContent = ` ${hours_left.toString().padStart(2,'0')} :
+             ${minutes_left.toString().padStart(2,'0')} :
+             ${seconds_left.toString().padStart(2,'0')}
+
+            ` ;
+
+            if(total_seconds <= 0){
+                alert('time up')
+                clearInterval(timeinterval);
+                document.getElementById('timer').textContent = "time's up";
+               
+                
+            }
+            else{
+                total_seconds--;
+                
+            }
+        }, 1000);
+
+    }
+    function stop_timer(){
+        clearInterval(timeinterval);
+      document.getElementById('timer').textContent = '';
+    }
+
+   
+    
+    </script>
+</body>
+</html>
